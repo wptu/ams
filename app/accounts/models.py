@@ -16,6 +16,9 @@ class UserProfile(models.Model):
     tu_id = models.CharField(max_length=20, unique=True)
     department = models.CharField(max_length=100, blank=True)
     faculty = models.CharField(max_length=100, blank=True)
+    organization = models.CharField(max_length=100, blank=True)
+    displayname_th = models.CharField(max_length=150, blank=True)
+    displayname_en = models.CharField(max_length=150, blank=True)
     
     def __str__(self):
         return f"{self.user.username} - {self.get_user_type_display()}"

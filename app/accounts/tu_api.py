@@ -113,6 +113,7 @@ class ThammasatAPI:
             # Log response details
             logger.debug(f"Response status code: {response.status_code}")
             logger.debug(f"Response headers: {response.headers}")
+            logger.debug(f"Response content: {response.content}")
             
             if response.status_code == 200:
                 logger.info(f"Authentication successful for user {username}")
@@ -219,6 +220,9 @@ def create_or_update_user(tu_user_data):
     profile.tu_id = tu_id
     profile.faculty = tu_user_data.get('faculty', '')
     profile.department = tu_user_data.get('department', '')
+    profile.organization = tu_user_data.get('organization', '')
+    profile.displayname_th = tu_user_data.get('displayname_th', '')
+    profile.displayname_en = tu_user_data.get('displayname_en', '')
     
     # Determine role
     tu_api = ThammasatAPI()
