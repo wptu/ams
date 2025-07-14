@@ -1,0 +1,101 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Home - Assignment Management System{% endblock %}
+
+{% block content %}
+<div class="min-h-screen bg-gray-50">
+  <header class="bg-white shadow">
+    <div class="mx-auto max-w-7xl py-6 px-4 sm:px-6 lg:px-8">
+      <h1 class="text-3xl font-bold tracking-tight text-gray-900">Assignment Management System</h1>
+    </div>
+  </header>
+  <main>
+    <div class="mx-auto max-w-7xl py-6 sm:px-6 lg:px-8">
+      <div class="px-4 py-6 sm:px-0">
+        <div class="rounded-lg border-4 border-dashed border-gray-200 p-6">
+          {% if user.is_authenticated %}
+            <h2 class="text-2xl font-semibold mb-4">Welcome, {{ user.first_name }} {{ user.last_name }}</h2>
+            <p class="mb-4">You are logged in as: <strong>{{ user.profile.get_user_type_display }}</strong></p>
+            
+            <div class="mt-8 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+              <!-- Dashboard Cards -->
+              <div class="bg-white overflow-hidden shadow rounded-lg">
+                <div class="px-4 py-5 sm:p-6">
+                  <h3 class="text-lg font-medium text-gray-900">Your Profile</h3>
+                  <p class="mt-1 text-sm text-gray-500">View and manage your profile information</p>
+                  <div class="mt-4">
+                    <a href="{% url 'profile' %}" class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700">
+                      View Profile
+                    </a>
+                  </div>
+                </div>
+              </div>
+              
+              {% if user.profile.user_type == 'admin' or user.profile.user_type == 'teacher' %}
+              <div class="bg-white overflow-hidden shadow rounded-lg">
+                <div class="px-4 py-5 sm:p-6">
+                  <h3 class="text-lg font-medium text-gray-900">Manage Courses</h3>
+                  <p class="mt-1 text-sm text-gray-500">Create and manage your courses</p>
+                  <div class="mt-4">
+                    <a href="#" class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700">
+                      View Courses
+                    </a>
+                  </div>
+                </div>
+              </div>
+              {% endif %}
+              
+              {% if user.profile.user_type == 'student' %}
+              <div class="bg-white overflow-hidden shadow rounded-lg">
+                <div class="px-4 py-5 sm:p-6">
+                  <h3 class="text-lg font-medium text-gray-900">Your Courses</h3>
+                  <p class="mt-1 text-sm text-gray-500">View your enrolled courses</p>
+                  <div class="mt-4">
+                    <a href="#" class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700">
+                      View Courses
+                    </a>
+                  </div>
+                </div>
+              </div>
+              {% endif %}
+              
+              <div class="bg-white overflow-hidden shadow rounded-lg">
+                <div class="px-4 py-5 sm:p-6">
+                  <h3 class="text-lg font-medium text-gray-900">Assignments</h3>
+                  <p class="mt-1 text-sm text-gray-500">
+                    {% if user.profile.user_type == 'student' %}
+                    View and submit your assignments
+                    {% else %}
+                    Create and manage assignments
+                    {% endif %}
+                  </p>
+                  <div class="mt-4">
+                    <a href="#" class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700">
+                      View Assignments
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <div class="mt-8">
+              <a href="{% url 'logout' %}" class="text-sm font-medium text-indigo-600 hover:text-indigo-500">
+                Logout
+              </a>
+            </div>
+          {% else %}
+            <div class="text-center">
+              <h2 class="text-2xl font-semibold mb-4">Welcome to the Assignment Management System</h2>
+              <p class="mb-6">Please log in to access the system.</p>
+              <a href="{% url 'login' %}" class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700">
+                Login
+              </a>
+            </div>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+{% endblock %}

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="200px" height="200px" viewBox="0 0 200 200" version="1.1" xmlns="http://www.w3.org/2000/svg">
+    <title>Thammasat University Logo</title>
+    <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <circle fill="#A51931" cx="100" cy="100" r="90"></circle>
+        <circle stroke="#FFFFFF" stroke-width="5" cx="100" cy="100" r="80"></circle>
+        <text font-family="Arial, sans-serif" font-size="24" font-weight="bold" fill="#FFFFFF" text-anchor="middle" x="100" y="90">THAMMASAT</text>
+        <text font-family="Arial, sans-serif" font-size="24" font-weight="bold" fill="#FFFFFF" text-anchor="middle" x="100" y="120">UNIVERSITY</text>
+    </g>
+</svg>

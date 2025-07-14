@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Assignment Management System{% endblock %}</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Custom CSS -->
+    <style>
+        /* Add any custom styles here */
+    </style>
+    
+    {% block extra_css %}{% endblock %}
+</head>
+<body class="h-full bg-gray-50">
+    <div class="min-h-screen flex flex-col">
+        <!-- Navigation -->
+        <nav class="bg-indigo-600">
+            <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+                <div class="flex h-16 items-center justify-between">
+                    <div class="flex items-center">
+                        <div class="flex-shrink-0">
+                            <a href="{% url 'home' %}" class="text-white font-bold text-xl">AMS</a>
+                        </div>
+                        <div class="hidden md:block">
+                            <div class="ml-10 flex items-baseline space-x-4">
+                                <a href="{% url 'home' %}" class="text-white hover:bg-indigo-500 hover:bg-opacity-75 px-3 py-2 rounded-md text-sm font-medium">Home</a>
+                                
+                                {% if user.is_authenticated %}
+                                    {% if user.profile.user_type == 'admin' or user.profile.user_type == 'teacher' %}
+                                    <a href="#" class="text-white hover:bg-indigo-500 hover:bg-opacity-75 px-3 py-2 rounded-md text-sm font-medium">Courses</a>
+                                    <a href="#" class="text-white hover:bg-indigo-500 hover:bg-opacity-75 px-3 py-2 rounded-md text-sm font-medium">Assignments</a>
+                                    {% endif %}
+                                    
+                                    {% if user.profile.user_type == 'student' %}
+                                    <a href="#" class="text-white hover:bg-indigo-500 hover:bg-opacity-75 px-3 py-2 rounded-md text-sm font-medium">My Courses</a>
+                                    <a href="#" class="text-white hover:bg-indigo-500 hover:bg-opacity-75 px-3 py-2 rounded-md text-sm font-medium">My Assignments</a>
+                                    {% endif %}
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="hidden md:block">
+                        <div class="ml-4 flex items-center md:ml-6">
+                            {% if user.is_authenticated %}
+                            <div class="relative ml-3">
+                                <div class="flex items-center">
+                                    <a href="{% url 'profile' %}" class="text-white hover:bg-indigo-500 hover:bg-opacity-75 px-3 py-2 rounded-md text-sm font-medium">
+                                        {{ user.first_name }} ({{ user.profile.get_user_type_display }})
+                                    </a>
+                                    <a href="{% url 'logout' %}" class="text-white hover:bg-indigo-500 hover:bg-opacity-75 px-3 py-2 rounded-md text-sm font-medium">
+                                        Logout
+                                    </a>
+                                </div>
+                            </div>
+                            {% else %}
+                            <a href="{% url 'login' %}" class="text-white hover:bg-indigo-500 hover:bg-opacity-75 px-3 py-2 rounded-md text-sm font-medium">Login</a>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </nav>
+        
+        <!-- Main Content -->
+        <div class="flex-grow">
+            {% block content %}{% endblock %}
+        </div>
+        
+        <!-- Footer -->
+        <footer class="bg-white">
+            <div class="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
+                <p class="text-center text-sm text-gray-500">
+                    &copy; {% now "Y" %} Thammasat University. All rights reserved.
+                </p>
+            </div>
+        </footer>
+    </div>
+    
+    {% block extra_js %}{% endblock %}
+</body>
+</html>
