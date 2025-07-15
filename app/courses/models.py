@@ -1,4 +1,5 @@
 from django.db import models
+from django.utils import timezone
 import uuid
 
 class Course(models.Model):
@@ -48,11 +49,29 @@ class Section(models.Model):
     name = models.CharField(max_length=255)
     description = models.TextField(blank=True)
 
+def resource_file_path(instance, filename):
+    # File will be uploaded to MEDIA_ROOT/courses/<course_id>/resources/<filename>
+    return f'courses/{instance.course.id}/resources/{filename}'
+
 class Resource(models.Model):
+    RESOURCE_TYPES = (
+        ('file', 'File Upload'),
+        ('link', 'External Link'),
+        ('text', 'Text Content'),
+    )
+    
     course = models.ForeignKey(Course, on_delete=models.CASCADE, related_name='resources')
     name = models.CharField(max_length=255)
-    file_url = models.URLField(blank=True)
     description = models.TextField(blank=True)
+    resource_type = models.CharField(max_length=10, choices=RESOURCE_TYPES, default='file')
+    file = models.FileField(upload_to=resource_file_path, blank=True, null=True)
+    file_url = models.URLField(blank=True)
+    text_content = models.TextField(blank=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    
+    def __str__(self):
+        return f"{self.name} ({self.get_resource_type_display()})"
 
 class Announcement(models.Model):
     course = models.ForeignKey(Course, on_delete=models.CASCADE, related_name='announcements')

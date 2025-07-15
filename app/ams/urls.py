@@ -6,6 +6,7 @@ from django.conf.urls.static import static
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('accounts.urls')),  # Include accounts URLs at root path
+    path('api/', include('courses.urls')),  # Include courses API URLs
 ]
 
 # Serve media files in development
